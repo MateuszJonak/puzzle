@@ -3,18 +3,16 @@ import { DropTarget } from 'react-dnd';
 import { ITEM_TYPES } from '../Puzzle/constants';
 import './BoardSquare.css';
 
-var squareTarget = {
+const squareTarget = {
   drop: function(props) {
     console.log('drop');
   },
 };
 
-function collect(connect, monitor) {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-  };
-}
+const collect = (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+});
 
 const BoardSquare = ({ connectDropTarget, isOver }) =>
   connectDropTarget &&

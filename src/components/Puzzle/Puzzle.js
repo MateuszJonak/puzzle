@@ -4,18 +4,14 @@ import { DragSource } from 'react-dnd';
 import { ITEM_TYPES } from './constants';
 import './Puzzle.css';
 
-var puzzleSource = {
-  beginDrag: function(props) {
-    return {};
-  },
+const puzzleSource = {
+  beginDrag: props => ({ id: props.id }),
 };
 
-function collect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-  };
-}
+const collect = (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging(),
+});
 
 const Puzzle = ({ id, isDragging, connectDragSource }) => {
   return (
