@@ -5,21 +5,48 @@ import { ITEM_TYPES } from './constants';
 import './Puzzle.css';
 
 const puzzleSource = {
-  beginDrag: props => ({ id: props.id }),
+  beginDrag: ({ id, left, top }) => ({
+    id,
+    left,
+    top,
+  }),
 };
 
 const collect = (connect, monitor) => ({
+  connectDragPreview: connect.dragPreview(),
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging(),
 });
 
-const Puzzle = ({ id, isDragging, connectDragSource }) => {
+const Puzzle = ({
+  id,
+  left,
+  top,
+  color,
+  isDragging,
+  connectDragPreview,
+  connectDragSource,
+  hideSourceOnDrag,
+}) => {
+  if (isDragging && hideSourceOnDrag) {
+    return null;
+  }
+
   return (
+    connectDragPreview &&
     connectDragSource &&
-    connectDragSource(
-      <div className="puzzle" style={{ opacity: isDragging ? 0.5 : 1 }}>
-        {id}
-      </div>,
+    connectDragPreview(
+      connectDragSource(
+        <div
+          className="puzzle"
+          style={{
+            left,
+            top,
+            backgroundColor: color,
+          }}>
+          {id}
+        </div>,
+      ),
     )
   );
 };
