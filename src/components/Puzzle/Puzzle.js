@@ -1,7 +1,7 @@
 import React from 'react';
 import { DragSource } from 'react-dnd';
 
-import { ITEM_TYPES } from './constants';
+import { ITEM_TYPES } from '../../lib/itemTypes';
 import './Puzzle.css';
 
 const puzzleSource = {
@@ -22,11 +22,14 @@ const Puzzle = ({
   id,
   left,
   top,
-  color,
-  isDragging,
+  width,
+  height,
+  style,
+  backgroundPosition,
+  hideSourceOnDrag,
   connectDragPreview,
   connectDragSource,
-  hideSourceOnDrag,
+  isDragging,
 }) => {
   if (isDragging && hideSourceOnDrag) {
     return null;
@@ -42,7 +45,10 @@ const Puzzle = ({
           style={{
             left,
             top,
-            backgroundColor: color,
+            width,
+            height,
+            background: `url("/0.jpeg") ${backgroundPosition.join(' ')}`,
+            ...style,
           }}>
           {id}
         </div>,

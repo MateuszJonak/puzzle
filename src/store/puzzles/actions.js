@@ -1,7 +1,7 @@
 import { createActions } from 'redux-actions';
 
-export const UPDATE_PUZZLES = 'puzzles/update';
+export const UPDATE_PUZZLE = 'update/puzzle';
 
 export default createActions({
-  [UPDATE_PUZZLES]: puzzles => ({ puzzles }),
+  [UPDATE_PUZZLE]: (id, payload) => ({ id, ...payload }),
 });

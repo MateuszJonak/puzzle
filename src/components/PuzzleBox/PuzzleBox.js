@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import actions from '../../store/puzzles/actions';
-import { ITEM_TYPES } from '../Puzzle/constants';
+import { findDOMNode } from 'react-dom';
+import { ITEM_TYPES } from '../../lib/itemTypes';
 import { Puzzle } from '../Puzzle';
 import './PuzzleBox.css';
 
@@ -13,11 +11,9 @@ const puzzleBoxTarget = {
       return;
     }
     const item = monitor.getItem();
-    const delta = monitor.getDifferenceFromInitialOffset();
-    const left = Math.round(item.left + delta.x);
-    const top = Math.round(item.top + delta.y);
+    const sourceClientOffset = monitor.getSourceClientOffset();
 
-    component.moveBox({ id: item.id, left, top });
+    component.moveBox(item.id, sourceClientOffset);
   },
 };
 
@@ -26,21 +22,25 @@ const collect = (connect, monitor) => ({
   isOver: monitor.isOver(),
 });
 
-class PuzzleBox extends React.Component {
-  moveBox({ id, left, top }) {
-    const { puzzles } = this.props;
+class PuzzleBox extends Component {
+  constructor(props) {
+    super(props);
 
-    const newPuzzles = puzzles.map(puzzle => {
-      if (puzzle.id === id) {
-        return {
-          ...puzzle,
-          left,
-          top,
-        };
-      }
-      return puzzle;
-    });
-    this.props.updatePuzzles(newPuzzles);
+    this.puzzleBoxRef = React.createRef();
+  }
+
+  getPuzzleBoxClientRect() {
+    return findDOMNode(this.puzzleBoxRef.current).getBoundingClientRect();
+  }
+
+  moveBox(id, sourceClientOffset) {
+    const puzzleBoxClientRect = this.getPuzzleBoxClientRect();
+    const positions = {
+      left: sourceClientOffset.x - puzzleBoxClientRect.left,
+      top: sourceClientOffset.y - puzzleBoxClientRect.top,
+    };
+
+    this.props.updatePuzzle(id, { ...positions, isMatched: false });
   }
 
   render() {
@@ -48,30 +48,25 @@ class PuzzleBox extends React.Component {
     return (
       connectDropTarget &&
       connectDropTarget(
-        <div className="puzzle-box">{this.renderPuzzles()}</div>,
+        <div className="puzzle-box-container">
+          <div className="puzzle-box" ref={this.puzzleBoxRef}>
+            {this.renderPuzzles()}
+          </div>
+        </div>,
       )
     );
   }
 
   renderPuzzles() {
-    return this.props.puzzles.map(puzzle => (
-      <Puzzle key={puzzle.id} {...puzzle} hideSourceOnDrag />
-    ));
+    return this.props.puzzles.map(
+      puzzle =>
+        !puzzle.isMatched && (
+          <Puzzle key={puzzle.id} {...puzzle} hideSourceOnDrag />
+        ),
+    );
   }
 }
 
-const mapStateToProps = state => ({
-  puzzles: state.puzzles,
-});
-
-const mapDispatchToProps = {
-  updatePuzzles: actions.puzzles.update,
-};
-
-export default compose(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  ),
-  DropTarget(ITEM_TYPES.puzzle, puzzleBoxTarget, collect),
-)(PuzzleBox);
+export default DropTarget(ITEM_TYPES.puzzle, puzzleBoxTarget, collect)(
+  PuzzleBox,
+);
