@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import actions from '../../store/puzzles/actions';
-import { getPuzzlesFlatten, getPuzzles } from '../../store/puzzles/selectors';
+import {
+  getPuzzles,
+  getDenormalizedPuzzles,
+} from '../../store/puzzles/selectors';
 import { Board } from '../Board';
 import { PuzzleBox } from '../PuzzleBox';
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../../lib/imageConstants';
@@ -10,18 +12,22 @@ import './Game.css';
 
 class Game extends Component {
   render() {
-    const { puzzles, puzzlesFlatten, updatePuzzle } = this.props;
+    const { puzzles, puzzlesRows, updatePuzzle, updatePositions } = this.props;
     return (
       <div className="game">
         <Board
-          puzzlesRows={puzzles}
+          puzzlesRows={puzzlesRows}
           width={IMAGE_WIDTH}
           height={IMAGE_HEIGHT}
           updatePuzzle={updatePuzzle}
         />
 
         <div className="puzzle-box-container">
-          <PuzzleBox puzzles={puzzlesFlatten} updatePuzzle={updatePuzzle} />
+          <PuzzleBox
+            puzzles={puzzles}
+            updatePuzzle={updatePuzzle}
+            updatePositions={updatePositions}
+          />
         </div>
       </div>
     );
@@ -29,12 +35,13 @@ class Game extends Component {
 }
 
 const mapStateToProps = state => ({
+  puzzlesRows: getDenormalizedPuzzles(state),
   puzzles: getPuzzles(state),
-  puzzlesFlatten: getPuzzlesFlatten(state),
 });
 
 const mapDispatchToProps = {
   updatePuzzle: actions.update.puzzle,
+  updatePositions: actions.update.positions,
 };
 
 export default connect(

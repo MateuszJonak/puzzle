@@ -29,6 +29,13 @@ class PuzzleBox extends Component {
     this.puzzleBoxRef = React.createRef();
   }
 
+  componentDidMount() {
+    const { updatePositions } = this.props;
+    const puzzleBoxClientRect = this.getPuzzleBoxClientRect();
+
+    updatePositions(puzzleBoxClientRect);
+  }
+
   getPuzzleBoxClientRect() {
     return findDOMNode(this.puzzleBoxRef.current).getBoundingClientRect();
   }
