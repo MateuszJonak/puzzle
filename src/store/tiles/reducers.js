@@ -2,32 +2,32 @@ import { handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
 import update from 'immutability-helper';
 import { get, flatten } from 'lodash/fp';
-import { UPDATE_PUZZLE, POSITIONS_CALCULATE } from './actions';
+import { UPDATE_TILE, POSITIONS_CALCULATE } from './actions';
 import { GAME_RESET } from '../game/actions';
 import {
-  normalizedPuzzles,
-  mapPuzzlesWithDimension,
-} from '../../lib/generatePuzzles';
+  normalizedTiles,
+  mapTilesWithDimension,
+} from '../../lib/generateTiles';
 
-export const REDUCER_NAME = 'puzzles';
+export const REDUCER_NAME = 'tiles';
 
-const initialStateData = normalizedPuzzles;
+const initialStateData = normalizedTiles;
 
-const updatePuzzle = (puzzle, newPuzzle) => ({
-  ...puzzle,
-  ...newPuzzle,
-  id: puzzle.id,
+const updateTile = (tile, newTile) => ({
+  ...tile,
+  ...newTile,
+  id: tile.id,
 });
 
 const data = handleActions(
   {
-    [UPDATE_PUZZLE]: (state, { payload: { id, ...newPuzzle } }) => {
-      if (id && newPuzzle) {
+    [UPDATE_TILE]: (state, { payload: { id, ...newTile } }) => {
+      if (id && newTile) {
         return update(state, {
           entities: {
-            puzzles: {
+            tiles: {
               [id]: {
-                $apply: puzzle => updatePuzzle(puzzle, newPuzzle),
+                $apply: tile => updateTile(tile, newTile),
               },
             },
           },
@@ -37,11 +37,11 @@ const data = handleActions(
     },
     [POSITIONS_CALCULATE]: (state, { payload: { width, height } = {} }) => {
       if (width && height) {
-        const puzzles = get('entities.puzzles', state);
+        const tiles = get('entities.tiles', state);
         return update(state, {
           entities: {
-            puzzles: {
-              $set: mapPuzzlesWithDimension({ width, height })(puzzles),
+            tiles: {
+              $set: mapTilesWithDimension({ width, height })(tiles),
             },
           },
         });
@@ -55,7 +55,7 @@ const data = handleActions(
 
 const order = handleActions(
   {
-    [UPDATE_PUZZLE]: (state, { payload: { id } }) =>
+    [UPDATE_TILE]: (state, { payload: { id } }) =>
       update(state, {
         $splice: [[state.indexOf(id), 1]],
         $push: [id],

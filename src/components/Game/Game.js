@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Board } from '../Board';
-import { PuzzleBox } from '../PuzzleBox';
+import { TilesBox } from '../TilesBox';
 import GameController from './GameController';
 import './Game.css';
 
@@ -16,8 +16,8 @@ class Game extends Component {
             <button onClick={() => gameReset()}>restart</button>
             <Board onFillEnd={gameFinish} />
 
-            <div className="puzzle-box-container">
-              <PuzzleBox onBeginFirstDrag={gameStart} />
+            <div className="tiles-box-container">
+              <TilesBox onBeginFirstDrag={gameStart} />
             </div>
           </div>
         )}

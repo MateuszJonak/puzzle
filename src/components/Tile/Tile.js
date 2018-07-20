@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
+import PropTypes from 'prop-types';
 import { ITEM_TYPES } from '../../lib/itemTypes';
-import './Puzzle.css';
+import './Tile.css';
 
-const puzzleSource = {
+const tileSource = {
   beginDrag: (
     { id, left, top, onBeginDrag = () => {} },
     monitor,
@@ -29,10 +30,9 @@ const collect = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 });
 
-class Puzzle extends Component {
+class Tile extends Component {
   render() {
     const {
-      id,
       left,
       top,
       width,
@@ -54,7 +54,7 @@ class Puzzle extends Component {
       connectDragPreview(
         connectDragSource(
           <div
-            className="puzzle"
+            className="tile"
             style={{
               left,
               top,
@@ -70,8 +70,32 @@ class Puzzle extends Component {
   }
 }
 
-Puzzle.defaultProps = {
+Tile.defaultProps = {
+  left: 0,
+  top: 0,
+  width: 0,
+  height: 0,
+  style: {},
+  backgroundPosition: [],
+  hideSourceOnDrag: false,
   onBeginDrag: () => {},
+  stopDrag: false,
 };
 
-export default DragSource(ITEM_TYPES.puzzle, puzzleSource, collect)(Puzzle);
+Tile.propTypes = {
+  id: PropTypes.number.isRequired,
+  left: PropTypes.number,
+  top: PropTypes.number,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+  style: PropTypes.object,
+  backgroundPosition: PropTypes.array,
+  hideSourceOnDrag: PropTypes.bool,
+  isDragging: PropTypes.bool,
+  connectDragPreview: PropTypes.func,
+  connectDragSource: PropTypes.func,
+  onBeginDrag: PropTypes.func,
+  stopDrag: PropTypes.bool,
+};
+
+export default DragSource(ITEM_TYPES.tile, tileSource, collect)(Tile);

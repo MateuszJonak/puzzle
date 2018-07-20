@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
 import { ITEM_TYPES } from '../../lib/itemTypes';
-import { Puzzle } from '../Puzzle';
+import { Tile } from '../Tile';
 import { TrackClientRect } from '../TrackClientRect';
-import { PUZZLE_BOX_RECT_NAME } from '../../store/ui/selectors';
-import './PuzzleBox.css';
+import { TILES_BOX_RECT_NAME } from '../../store/ui/selectors';
+import './TilesBox.css';
 
-const puzzleBoxTarget = {
+const tilesBoxTarget = {
   drop: function(props, monitor, component) {
     if (!component) {
       return;
@@ -23,32 +23,32 @@ const collect = (connect, monitor) => ({
   isOver: monitor.isOver(),
 });
 
-class PuzzleBox extends Component {
+class TilesBox extends Component {
   render() {
     const { connectDropTarget } = this.props;
     return (
       connectDropTarget &&
       connectDropTarget(
-        <div className="puzzle-box-container">
+        <div className="tiles-box-drop-target">
           <TrackClientRect
             as="div"
-            name={PUZZLE_BOX_RECT_NAME}
-            className="puzzle-box">
-            {this.renderPuzzles()}
+            name={TILES_BOX_RECT_NAME}
+            className="tiles-box">
+            {this.renderTiles()}
           </TrackClientRect>
         </div>,
       )
     );
   }
 
-  renderPuzzles() {
-    const { handleBeginDrag, puzzles } = this.props;
-    return puzzles.map(
-      puzzle =>
-        !puzzle.isMatched && (
-          <Puzzle
-            key={puzzle.id}
-            {...puzzle}
+  renderTiles() {
+    const { handleBeginDrag, tiles } = this.props;
+    return tiles.map(
+      tile =>
+        !tile.isMatched && (
+          <Tile
+            key={tile.id}
+            {...tile}
             hideSourceOnDrag
             onBeginDrag={handleBeginDrag}
           />
@@ -57,6 +57,4 @@ class PuzzleBox extends Component {
   }
 }
 
-export default DropTarget(ITEM_TYPES.puzzle, puzzleBoxTarget, collect)(
-  PuzzleBox,
-);
+export default DropTarget(ITEM_TYPES.tile, tilesBoxTarget, collect)(TilesBox);

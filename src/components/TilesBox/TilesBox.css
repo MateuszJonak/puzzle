@@ -1,9 +1,9 @@
-.puzzle-box-container {
+.tiles-box-drop-target {
   height: inherit;
   width: inherit;
 }
 
-.puzzle-box {
+.tiles-box {
   height: inherit;
   width: inherit;
   position: relative;

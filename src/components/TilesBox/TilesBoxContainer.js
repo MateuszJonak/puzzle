@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { getPuzzles } from '../../store/puzzles/selectors';
-import { getPuzzleBoxRect } from '../../store/ui/selectors';
+import { getTiles } from '../../store/tiles/selectors';
+import { getTilesBoxRect } from '../../store/ui/selectors';
 import { getIsRunning, getIsFinished } from '../../store/game/selectors';
-import actions from '../../store/puzzles/actions';
-import PuzzleBox from './PuzzleBox';
-import './PuzzleBox.css';
+import actions from '../../store/tiles/actions';
+import TilesBox from './TilesBox';
 
-class PuzzleBoxContainer extends Component {
+class TilesBoxContainer extends Component {
   handleBeginDrag = () => {
     if (!this.props.isRunning && !this.props.isFinished) {
       this.props.onBeginFirstDrag();
@@ -16,21 +15,21 @@ class PuzzleBoxContainer extends Component {
   };
 
   handleDrop = (id, sourceClientOffset) => {
-    const { puzzleBoxRect, updatePuzzle } = this.props;
-    if (!puzzleBoxRect) {
+    const { tilesBoxRect, updateTile } = this.props;
+    if (!tilesBoxRect) {
       return;
     }
     const positions = {
-      left: sourceClientOffset.x - puzzleBoxRect.left,
-      top: sourceClientOffset.y - puzzleBoxRect.top,
+      left: sourceClientOffset.x - tilesBoxRect.left,
+      top: sourceClientOffset.y - tilesBoxRect.top,
     };
-    updatePuzzle(id, { ...positions, isMatched: false });
+    updateTile(id, { ...positions, isMatched: false });
   };
 
   render() {
     return (
-      <PuzzleBox
-        puzzles={this.props.puzzles}
+      <TilesBox
+        tiles={this.props.tiles}
         onDrop={this.handleDrop}
         handleBeginDrag={this.handleBeginDrag}
       />
@@ -41,12 +40,12 @@ class PuzzleBoxContainer extends Component {
 const mapStateToProps = state => ({
   isRunning: getIsRunning(state),
   isFinished: getIsFinished(state),
-  puzzles: getPuzzles(state),
-  puzzleBoxRect: getPuzzleBoxRect(state),
+  tiles: getTiles(state),
+  tilesBoxRect: getTilesBoxRect(state),
 });
 
 const mapDispatchToProps = {
-  updatePuzzle: actions.update.puzzle,
+  updateTile: actions.update.tile,
   positionsCalcalute: actions.positions.calculate,
 };
 
@@ -55,4 +54,4 @@ export default compose(
     mapStateToProps,
     mapDispatchToProps,
   ),
-)(PuzzleBoxContainer);
+)(TilesBoxContainer);

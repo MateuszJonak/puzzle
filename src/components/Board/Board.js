@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BoardField from './BoardField';
-import { Puzzle } from '../Puzzle';
+import { Tile } from '../Tile';
 import './Board.css';
 
 class Board extends Component {
@@ -8,34 +8,34 @@ class Board extends Component {
     const { width, height } = this.props;
     return (
       <div className="board" style={{ width, height }}>
-        {this.renderPuzzlesRows()}
+        {this.renderTilesRows()}
       </div>
     );
   }
 
-  renderPuzzlesRows() {
-    const { puzzlesRows } = this.props;
+  renderTilesRows() {
+    const { tilesRows } = this.props;
 
-    return puzzlesRows.map((puzzlesRow, index) => (
+    return tilesRows.map((tilesRow, index) => (
       <div key={index} className="board-row">
-        {this.renderPuzzles(puzzlesRow)}
+        {this.renderTiles(tilesRow)}
       </div>
     ));
   }
 
-  renderPuzzles(puzzlesRow) {
-    const { updatePuzzle, onFill, frozen } = this.props;
-    return puzzlesRow.map(puzzle => (
+  renderTiles(tilesRow) {
+    const { updateTile, onFill, frozen } = this.props;
+    return tilesRow.map(tile => (
       <BoardField
-        key={puzzle.id}
-        id={puzzle.id}
-        updatePuzzle={updatePuzzle}
+        key={tile.id}
+        id={tile.id}
+        updateTile={updateTile}
         onFill={onFill}
-        width={puzzle.width}
-        height={puzzle.height}>
-        {puzzle.isMatched && (
-          <Puzzle
-            {...puzzle}
+        width={tile.width}
+        height={tile.height}>
+        {tile.isMatched && (
+          <Tile
+            {...tile}
             hideSourceOnDrag
             stopDrag={frozen}
             style={{ position: 'static' }}

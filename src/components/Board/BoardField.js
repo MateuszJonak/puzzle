@@ -22,7 +22,7 @@ const collect = (connect, monitor) => ({
 class BoardField extends Component {
   onDrop(id) {
     if (id === this.props.id) {
-      this.props.updatePuzzle(id, { isMatched: true });
+      this.props.updateTile(id, { isMatched: true });
       this.props.onFill();
     }
   }
@@ -42,4 +42,4 @@ class BoardField extends Component {
   }
 }
 
-export default DropTarget(ITEM_TYPES.puzzle, fieldTarget, collect)(BoardField);
+export default DropTarget(ITEM_TYPES.tile, fieldTarget, collect)(BoardField);

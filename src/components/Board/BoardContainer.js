@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Board from './Board';
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../../lib/imageConstants';
-import actions from '../../store/puzzles/actions';
-import { getDenormalizedPuzzles } from '../../store/puzzles/selectors';
+import actions from '../../store/tiles/actions';
+import { getDenormalizedTiles } from '../../store/tiles/selectors';
 import { getIsFinished } from '../../store/game/selectors';
 
 class BoardContainer extends Component {
   handleFill = () => {
-    const { puzzlesRows, onFillEnd } = this.props;
-    const isFillEnd = puzzlesRows.every(puzzleRow =>
-      puzzleRow.every(puzzle => puzzle.isMatched),
+    const { tilesRows, onFillEnd } = this.props;
+    const isFillEnd = tilesRows.every(tileRow =>
+      tileRow.every(tile => tile.isMatched),
     );
     if (isFillEnd) {
       onFillEnd();
@@ -32,12 +32,12 @@ class BoardContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  puzzlesRows: getDenormalizedPuzzles(state),
+  tilesRows: getDenormalizedTiles(state),
   isFinished: getIsFinished(state),
 });
 
 const mapDispatchToProps = {
-  updatePuzzle: actions.update.puzzle,
+  updateTile: actions.update.tile,
 };
 
 export default connect(
