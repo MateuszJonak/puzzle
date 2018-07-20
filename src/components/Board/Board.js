@@ -24,7 +24,7 @@ class Board extends Component {
   }
 
   renderPuzzles(puzzlesRow) {
-    const { updatePuzzle, onFill } = this.props;
+    const { updatePuzzle, onFill, frozen } = this.props;
     return puzzlesRow.map(puzzle => (
       <BoardField
         key={puzzle.id}
@@ -34,7 +34,12 @@ class Board extends Component {
         width={puzzle.width}
         height={puzzle.height}>
         {puzzle.isMatched && (
-          <Puzzle {...puzzle} hideSourceOnDrag style={{ position: 'static' }} />
+          <Puzzle
+            {...puzzle}
+            hideSourceOnDrag
+            stopDrag={frozen}
+            style={{ position: 'static' }}
+          />
         )}
       </BoardField>
     ));

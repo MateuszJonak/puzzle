@@ -62,23 +62,23 @@ class GameController extends Component {
   }
 
   timersFinish() {
-    this.props.localTimerFinish();
     this.props.globalTimerFinish();
+    this.props.localTimerFinish();
   }
 
   render() {
-    const { localElapsed } = this.props;
-    const duration = moment.duration(localElapsed).format('mm:ss:SS');
+    const { localElapsed, isFinished, elapsed } = this.props;
+    const duration = isFinished
+      ? moment.duration(elapsed).format('mm:ss:SS')
+      : moment.duration(localElapsed).format('mm:ss:SS');
 
     return (
       <React.Fragment>
-        <div className="game-timer">
-          <h2>{duration}</h2>
-        </div>
         {this.props.children({
           gameStart: this.gameStart,
           gameFinish: this.gameFinish,
           gameReset: this.gameReset,
+          duration,
         })}
       </React.Fragment>
     );

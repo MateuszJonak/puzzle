@@ -3,14 +3,14 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { getPuzzles } from '../../store/puzzles/selectors';
 import { getPuzzleBoxRect } from '../../store/ui/selectors';
-import { getIsRunning } from '../../store/game/selectors';
+import { getIsRunning, getIsFinished } from '../../store/game/selectors';
 import actions from '../../store/puzzles/actions';
 import PuzzleBox from './PuzzleBox';
 import './PuzzleBox.css';
 
 class PuzzleBoxContainer extends Component {
   handleBeginDrag = () => {
-    if (!this.props.isRunning) {
+    if (!this.props.isRunning && !this.props.isFinished) {
       this.props.onBeginFirstDrag();
     }
   };
@@ -40,6 +40,7 @@ class PuzzleBoxContainer extends Component {
 
 const mapStateToProps = state => ({
   isRunning: getIsRunning(state),
+  isFinished: getIsFinished(state),
   puzzles: getPuzzles(state),
   puzzleBoxRect: getPuzzleBoxRect(state),
 });

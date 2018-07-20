@@ -20,6 +20,7 @@ const puzzleSource = {
       top,
     };
   },
+  canDrag: ({ stopDrag }) => !stopDrag,
 };
 
 const collect = (connect, monitor) => ({
@@ -61,9 +62,8 @@ class Puzzle extends Component {
               height,
               background: `url("/0.jpeg") ${backgroundPosition.join(' ')}`,
               ...style,
-            }}>
-            {id}
-          </div>,
+            }}
+          />,
         ),
       )
     );

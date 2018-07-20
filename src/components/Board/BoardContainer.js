@@ -4,6 +4,7 @@ import Board from './Board';
 import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../../lib/imageConstants';
 import actions from '../../store/puzzles/actions';
 import { getDenormalizedPuzzles } from '../../store/puzzles/selectors';
+import { getIsFinished } from '../../store/game/selectors';
 
 class BoardContainer extends Component {
   handleFill = () => {
@@ -17,12 +18,13 @@ class BoardContainer extends Component {
   };
 
   render() {
-    const { onFillEnd, ...restProps } = this.props;
+    const { onFillEnd, isFinished, ...restProps } = this.props;
     return (
       <Board
         onFill={this.handleFill}
         width={IMAGE_WIDTH}
         height={IMAGE_HEIGHT}
+        frozen={isFinished}
         {...restProps}
       />
     );
@@ -31,6 +33,7 @@ class BoardContainer extends Component {
 
 const mapStateToProps = state => ({
   puzzlesRows: getDenormalizedPuzzles(state),
+  isFinished: getIsFinished(state),
 });
 
 const mapDispatchToProps = {
