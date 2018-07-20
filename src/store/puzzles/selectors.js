@@ -2,9 +2,10 @@ import { get } from 'lodash/fp';
 import { denormalize } from 'normalizr';
 import { createSelector } from 'reselect';
 import { puzzlesGridSchema, puzzlesListSchema } from '../../lib/puzzlesSchema';
+import { REDUCER_NAME } from './reducers';
 
-export const getNormalizedPuzzles = get('puzzles.data');
-export const getPuzzlesOrder = get('puzzles.order');
+export const getNormalizedPuzzles = get(`${REDUCER_NAME}.data`);
+export const getPuzzlesOrder = get(`${REDUCER_NAME}.order`);
 
 export const getDenormalizedPuzzles = createSelector(
   getNormalizedPuzzles,

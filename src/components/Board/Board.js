@@ -24,11 +24,13 @@ class Board extends Component {
   }
 
   renderPuzzles(puzzlesRow) {
+    const { updatePuzzle, onFill } = this.props;
     return puzzlesRow.map(puzzle => (
       <BoardField
         key={puzzle.id}
         id={puzzle.id}
-        updatePuzzle={this.props.updatePuzzle}
+        updatePuzzle={updatePuzzle}
+        onFill={onFill}
         width={puzzle.width}
         height={puzzle.height}>
         {puzzle.isMatched && (

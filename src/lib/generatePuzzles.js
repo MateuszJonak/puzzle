@@ -22,8 +22,7 @@ export const PUZZLES = IDS_ROWS.map((row, indexRow) => {
   }));
 });
 
-export const generateNormalizedPuzzles = () =>
-  normalize(PUZZLES, puzzlesGridSchema);
+export const normalizedPuzzles = normalize(PUZZLES, puzzlesGridSchema);
 
 const BOX_OFFSET = 10;
 

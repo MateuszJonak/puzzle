@@ -1,15 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
-
 import { ITEM_TYPES } from '../../lib/itemTypes';
 import './Puzzle.css';
 
 const puzzleSource = {
-  beginDrag: ({ id, left, top }) => ({
-    id,
-    left,
-    top,
-  }),
+  beginDrag: (
+    { id, left, top, onBeginDrag = () => {} },
+    monitor,
+    component,
+  ) => {
+    if (!component) {
+      return;
+    }
+
+    onBeginDrag();
+    return {
+      id,
+      left,
+      top,
+    };
+  },
 };
 
 const collect = (connect, monitor) => ({
@@ -18,43 +28,50 @@ const collect = (connect, monitor) => ({
   isDragging: monitor.isDragging(),
 });
 
-const Puzzle = ({
-  id,
-  left,
-  top,
-  width,
-  height,
-  style,
-  backgroundPosition,
-  hideSourceOnDrag,
-  connectDragPreview,
-  connectDragSource,
-  isDragging,
-}) => {
-  if (isDragging && hideSourceOnDrag) {
-    return null;
-  }
+class Puzzle extends Component {
+  render() {
+    const {
+      id,
+      left,
+      top,
+      width,
+      height,
+      style,
+      backgroundPosition,
+      hideSourceOnDrag,
+      connectDragPreview,
+      connectDragSource,
+      isDragging,
+    } = this.props;
+    if (isDragging && hideSourceOnDrag) {
+      return null;
+    }
 
-  return (
-    connectDragPreview &&
-    connectDragSource &&
-    connectDragPreview(
-      connectDragSource(
-        <div
-          className="puzzle"
-          style={{
-            left,
-            top,
-            width,
-            height,
-            background: `url("/0.jpeg") ${backgroundPosition.join(' ')}`,
-            ...style,
-          }}>
-          {id}
-        </div>,
-      ),
-    )
-  );
+    return (
+      connectDragPreview &&
+      connectDragSource &&
+      connectDragPreview(
+        connectDragSource(
+          <div
+            className="puzzle"
+            style={{
+              left,
+              top,
+              width,
+              height,
+              background: `url("/0.jpeg") ${backgroundPosition.join(' ')}`,
+              ...style,
+            }}>
+            {id}
+          </div>,
+        ),
+      )
+    );
+  }
+}
+
+Puzzle.defaultProps = {
+  onBeginDrag: () => {},
 };
 
 export default DragSource(ITEM_TYPES.puzzle, puzzleSource, collect)(Puzzle);

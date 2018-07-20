@@ -10,7 +10,7 @@ const fieldTarget = {
     }
     const item = monitor.getItem();
 
-    component.moveBox(item.id);
+    component.onDrop(item.id);
   },
 };
 
@@ -20,9 +20,10 @@ const collect = (connect, monitor) => ({
 });
 
 class BoardField extends Component {
-  moveBox(id) {
+  onDrop(id) {
     if (id === this.props.id) {
       this.props.updatePuzzle(id, { isMatched: true });
+      this.props.onFill();
     }
   }
 

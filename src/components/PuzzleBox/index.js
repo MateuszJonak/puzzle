@@ -1,1 +1,1 @@
-export { default as PuzzleBox } from './PuzzleBox';
+export { default as PuzzleBox } from './PuzzleBoxContainer';

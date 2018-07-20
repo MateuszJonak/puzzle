@@ -2,15 +2,16 @@ import { handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
 import update from 'immutability-helper';
 import { get, flatten } from 'lodash/fp';
-import { UPDATE_PUZZLE, UPDATE_POSITIONS } from './actions';
+import { UPDATE_PUZZLE, POSITIONS_CALCULATE } from './actions';
+import { GAME_RESET } from '../game/actions';
 import {
-  generateNormalizedPuzzles,
+  normalizedPuzzles,
   mapPuzzlesWithDimension,
 } from '../../lib/generatePuzzles';
 
 export const REDUCER_NAME = 'puzzles';
 
-const initialStateData = generateNormalizedPuzzles();
+const initialStateData = normalizedPuzzles;
 
 const updatePuzzle = (puzzle, newPuzzle) => ({
   ...puzzle,
@@ -34,7 +35,7 @@ const data = handleActions(
       }
       return state;
     },
-    [UPDATE_POSITIONS]: (state, { payload: { width, height } }) => {
+    [POSITIONS_CALCULATE]: (state, { payload: { width, height } = {} }) => {
       if (width && height) {
         const puzzles = get('entities.puzzles', state);
         return update(state, {
@@ -47,6 +48,7 @@ const data = handleActions(
       }
       return state;
     },
+    [GAME_RESET]: () => ({ ...initialStateData }),
   },
   initialStateData,
 );
@@ -58,6 +60,7 @@ const order = handleActions(
         $splice: [[state.indexOf(id), 1]],
         $push: [id],
       }),
+    [GAME_RESET]: () => [...flatten(initialStateData.result)],
   },
   flatten(initialStateData.result),
 );

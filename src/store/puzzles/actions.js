@@ -1,9 +1,9 @@
 import { createActions } from 'redux-actions';
 
 export const UPDATE_PUZZLE = 'update/puzzle';
-export const UPDATE_POSITIONS = 'update/positions';
+export const POSITIONS_CALCULATE = 'positions/calculate';
 
 export default createActions({
   [UPDATE_PUZZLE]: (id, payload) => ({ id, ...payload }),
-  [UPDATE_POSITIONS]: null,
+  [POSITIONS_CALCULATE]: null,
 });
