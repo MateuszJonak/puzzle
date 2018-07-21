@@ -1,7 +1,8 @@
 .board {
-  background-color: azure;
+  background-color: white;
   z-index: 1;
-  margin: auto;
+	margin: auto;
+	border: 2px solid #2391b4;
 }
 
 .board-row {

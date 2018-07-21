@@ -15,10 +15,7 @@ export const TILES = IDS_ROWS.map((row, indexRow) => {
     height,
     indexRow,
     isMatched: false,
-    backgroundPosition: [
-      `${-indexColumn * width}px`,
-      `${-indexRow * height}px`,
-    ],
+    backgroundPosition: [-indexColumn * width, -indexRow * height],
   }));
 });
 

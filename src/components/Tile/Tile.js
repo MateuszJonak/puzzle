@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { DragSource } from 'react-dnd';
 import PropTypes from 'prop-types';
+import { BORDER_WIDTH } from '../../lib/imageConstants';
 import { ITEM_TYPES } from '../../lib/itemTypes';
 import './Tile.css';
 
@@ -58,9 +59,14 @@ class Tile extends Component {
             style={{
               left,
               top,
-              width,
-              height,
-              background: `url("/0.jpeg") ${backgroundPosition.join(' ')}`,
+              width: width - 2 * BORDER_WIDTH,
+              height: height - 2 * BORDER_WIDTH,
+              borderWidth: BORDER_WIDTH,
+              borderStyle: 'solid',
+              borderColor: '#bc3e2b',
+              background: `url("/0.jpeg") ${backgroundPosition
+                .map(value => `${value - BORDER_WIDTH}px`)
+                .join(' ')}`,
               ...style,
             }}
           />,

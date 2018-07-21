@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DropTarget } from 'react-dnd';
+import { BORDER_WIDTH } from '../../lib/imageConstants';
 import { ITEM_TYPES } from '../../lib/itemTypes';
 import './BoardField.css';
 
@@ -34,7 +35,12 @@ class BoardField extends Component {
       connectDropTarget(
         <div
           className="board-field"
-          style={{ width, height, background: isOver ? 'red' : 'blue' }}>
+          style={{
+            width: width - 2 * BORDER_WIDTH,
+            height: height - 2 * BORDER_WIDTH,
+            border: `${BORDER_WIDTH}px solid #2391b4`,
+            background: isOver ? '#F1F1F1' : '#FFFFFF',
+          }}>
           {children}
         </div>,
       )

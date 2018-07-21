@@ -23,3 +23,19 @@ export const getTiles = createSelector(
   (normalizedTiles, tilesOrder) =>
     denormalize(tilesOrder, tilesListSchema, normalizedTiles.entities),
 );
+
+export const getBoardDimension = createSelector(
+  getDenormalizedTiles,
+  denormalizedTiles => {
+    const width = denormalizedTiles[0].reduce(
+      (sum, tile) => sum + tile.width,
+      0,
+    );
+    const height = denormalizedTiles.reduce(
+      (sum, row) => sum + row[0].height,
+      0,
+    );
+
+    return { width, height };
+  },
+);

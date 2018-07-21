@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Board from './Board';
-import { IMAGE_HEIGHT, IMAGE_WIDTH } from '../../lib/imageConstants';
 import actions from '../../store/tiles/actions';
-import { getDenormalizedTiles } from '../../store/tiles/selectors';
+import {
+  getDenormalizedTiles,
+  getBoardDimension,
+} from '../../store/tiles/selectors';
 import { getIsFinished } from '../../store/game/selectors';
 
 class BoardContainer extends Component {
@@ -18,12 +20,12 @@ class BoardContainer extends Component {
   };
 
   render() {
-    const { onFillEnd, isFinished, ...restProps } = this.props;
+    const { onFillEnd, isFinished, boardDimension, ...restProps } = this.props;
     return (
       <Board
         onFill={this.handleFill}
-        width={IMAGE_WIDTH}
-        height={IMAGE_HEIGHT}
+        width={boardDimension.width}
+        height={boardDimension.height}
         frozen={isFinished}
         {...restProps}
       />
@@ -33,6 +35,7 @@ class BoardContainer extends Component {
 
 const mapStateToProps = state => ({
   tilesRows: getDenormalizedTiles(state),
+  boardDimension: getBoardDimension(state),
   isFinished: getIsFinished(state),
 });
 

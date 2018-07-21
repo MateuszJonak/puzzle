@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import BoardField from './BoardField';
+import { BORDER_WIDTH } from '../../lib/imageConstants';
 import { Tile } from '../Tile';
 import './Board.css';
 
@@ -38,7 +39,11 @@ class Board extends Component {
             {...tile}
             hideSourceOnDrag
             stopDrag={frozen}
-            style={{ position: 'static' }}
+            style={{
+              position: 'static',
+              transform: `translate(-${BORDER_WIDTH}px, -${BORDER_WIDTH}px)`,
+              borderColor: '#2391b4',
+            }}
           />
         )}
       </BoardField>
