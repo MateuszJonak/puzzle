@@ -1,6 +1,6 @@
 # Puzzle
 
-This project was created based on "react-dnd" library.
+Deployed here: [https://mateuszjonak.github.io/puzzle/](https://mateuszjonak.github.io/puzzle/)
 
 ## Available Scripts
 
@@ -26,4 +26,5 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.
 
+## Screenshots
 ![screenshot](https://raw.githubusercontent.com/MateuszJonak/puzzle/master/screenshot.jpg)
