@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Game should render component correctly with props 1`] = `
+<div
+  className="game"
+>
+  <div
+    className="game-timer"
+  >
+    <h2>
+      600
+    </h2>
+  </div>
+  <div
+    className="actions-container"
+  >
+    <button
+      className="btn btn-regular"
+      onClick={[Function]}
+    >
+      restart
+    </button>
+  </div>
+  <div
+    className="board-container"
+  >
+    <Connect(BoardContainer) />
+  </div>
+  <div
+    className="tiles-box-container"
+  >
+    <Connect(TilesBoxContainer) />
+  </div>
+</div>
+`;

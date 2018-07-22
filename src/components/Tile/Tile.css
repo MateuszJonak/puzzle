@@ -1,0 +1,9 @@
+.tile {
+  width: 150px;
+  height: 150px;
+  background-color: red;
+  position: absolute;
+  cursor: move;
+  z-index: 2;
+  background-image: url("./0.jpg");
+}

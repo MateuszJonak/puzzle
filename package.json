@@ -1,23 +1,47 @@
 {
   "name": "puzzle",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "immutability-helper": "^2.7.1",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "moment-duration-format": "^2.2.2",
+    "normalizr": "^3.2.4",
     "react": "^16.4.1",
     "react-dnd": "^5.0.0",
     "react-dnd-html5-backend": "^5.0.1",
     "react-dom": "^16.4.1",
-    "react-scripts": "1.1.4"
+    "react-redux": "^5.0.7",
+    "react-scripts": "1.1.4",
+    "redux": "^4.0.0",
+    "redux-actions": "^2.4.0",
+    "redux-localstorage": "^0.4.1",
+    "redux-localstorage-debounce": "^0.1.0",
+    "redux-localstorage-filter": "^0.1.1",
+    "redux-saga": "^0.16.0",
+    "reselect": "^3.0.1"
   },
+  "homepage": "https://mateuszjonak.github.io/puzzle",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "prettier": {
     "singleQuote": true,
     "trailingComma": "all",
     "jsxBracketSameLine": true
+  },
+  "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.4",
+    "gh-pages": "^1.2.0",
+    "react-test-renderer": "^16.4.1",
+    "redux-devtools-extension": "^2.13.5"
   }
 }
