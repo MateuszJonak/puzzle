@@ -13,9 +13,14 @@ class Game extends Component {
             <div className="game-timer">
               <h2>{duration}</h2>
             </div>
-            <button onClick={() => gameReset()}>restart</button>
-            <Board onFillEnd={gameFinish} />
-
+            <div className="actions-container">
+              <button className="btn btn-regular" onClick={() => gameReset()}>
+                restart
+              </button>
+            </div>
+            <div className="board-container">
+              <Board onFillEnd={gameFinish} />
+            </div>
             <div className="tiles-box-container">
               <TilesBox onBeginFirstDrag={gameStart} />
             </div>

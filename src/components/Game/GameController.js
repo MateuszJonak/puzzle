@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import momentDurationFormatSetup from 'moment-duration-format';
 import actions from '../../store/game/actions';
@@ -14,7 +15,7 @@ import withGlobalTimer from './withGlobalTimer';
 
 momentDurationFormatSetup(moment);
 
-class GameController extends Component {
+export class GameController extends Component {
   componentDidMount() {
     const { isRunning, elapsed } = this.props;
     if (isRunning) {
@@ -47,34 +48,39 @@ class GameController extends Component {
   };
 
   timersStart({ lastElapsed } = {}) {
-    this.props.localTimerStart({ lastElapsed });
-    this.props.globalTimerStart();
+    const { localTimerStart, globalTimerStart } = this.props;
+    localTimerStart({ lastElapsed });
+    globalTimerStart();
   }
 
   timersStop() {
-    this.props.localTimerStop();
-    this.props.globalTimerStop();
+    const { localTimerStop, globalTimerStop } = this.props;
+    localTimerStop();
+    globalTimerStop();
   }
 
   timersReset() {
-    this.props.localTimerFinish();
-    this.props.globalTimerStop();
+    const { localTimerFinish, globalTimerStop } = this.props;
+    localTimerFinish();
+    globalTimerStop();
   }
 
   timersFinish() {
-    this.props.globalTimerFinish();
-    this.props.localTimerFinish();
+    const { globalTimerFinish, localTimerFinish } = this.props;
+    globalTimerFinish();
+    localTimerFinish();
   }
 
   render() {
-    const { localElapsed, isFinished, elapsed } = this.props;
+    const { localElapsed, isFinished, elapsed, children } = this.props;
+
     const duration = isFinished
       ? moment.duration(elapsed).format('mm:ss:SS')
       : moment.duration(localElapsed).format('mm:ss:SS');
 
     return (
       <React.Fragment>
-        {this.props.children({
+        {children({
           gameStart: this.gameStart,
           gameFinish: this.gameFinish,
           gameReset: this.gameReset,
@@ -95,8 +101,44 @@ const mapDispatchToProps = {
   actionGameReset: actions.game.reset,
 };
 
+const propsFunctions = [
+  'actionGameStart',
+  'actionGameFinish',
+  'actionGameReset',
+  'localTimerStart',
+  'localTimerStop',
+  'localTimerFinish',
+  'globalTimerStart',
+  'globalTimerStop',
+  'globalTimerFinish',
+];
+
+const propsFunctionsPropTypes = propsFunctions.reduce(
+  (result, propType) => ({ ...result, [propType]: PropTypes.func }),
+  {},
+);
+
+const propsFunctionsDefaultProps = propsFunctions.reduce(
+  (result, propType) => ({ ...result, [propType]: () => {} }),
+  {},
+);
+
+GameController.propTypes = {
+  isRunning: PropTypes.bool,
+  isFinished: PropTypes.bool,
+  elapsed: PropTypes.number,
+  localElapsed: PropTypes.number,
+  children: PropTypes.func,
+  ...propsFunctionsPropTypes,
+};
+
 GameController.defaultProps = {
+  isRunning: false,
+  isFinished: false,
   elapsed: 0,
+  localElapsed: 0,
+  children: () => {},
+  ...propsFunctionsDefaultProps,
 };
 
 export default compose(

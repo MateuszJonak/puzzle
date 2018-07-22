@@ -34,12 +34,13 @@ const withLocalTimer = WrappedComponent => {
     };
 
     render() {
+      const { localElapsed } = this.state;
       return (
         <WrappedComponent
           localTimerStart={this.localTimerStart}
           localTimerStop={this.stopTimer}
           localTimerFinish={this.localTimerFinish}
-          {...this.state}
+          localElapsed={localElapsed}
           {...this.props}
         />
       );

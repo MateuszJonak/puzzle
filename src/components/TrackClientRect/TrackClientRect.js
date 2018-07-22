@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { findDOMNode } from 'react-dom';
+import PropTypes from 'prop-types';
 import actions from '../../store/ui/actions';
 
-class TrackClientRect extends Component {
+// TODO Do some tests
+export class TrackClientRect extends Component {
   constructor(props) {
     super(props);
 
@@ -31,6 +33,17 @@ class TrackClientRect extends Component {
 
 const mapStateToProps = () => ({});
 const mapDispatchToProps = { rectSet: actions.rect.set };
+
+TrackClientRect.defaultProps = {
+  as: 'div',
+  rectSet: () => {},
+};
+
+TrackClientRect.propTypes = {
+  name: PropTypes.string.isRequired,
+  as: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  rectSet: PropTypes.func,
+};
 
 export default connect(
   mapStateToProps,
