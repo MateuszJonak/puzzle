@@ -64,7 +64,7 @@ class Tile extends Component {
               borderWidth: BORDER_WIDTH,
               borderStyle: 'solid',
               borderColor: '#bc3e2b',
-              background: `url("/0.jpeg") ${backgroundPosition
+              backgroundPosition: `${backgroundPosition
                 .map(value => `${value - BORDER_WIDTH}px`)
                 .join(' ')}`,
               ...style,

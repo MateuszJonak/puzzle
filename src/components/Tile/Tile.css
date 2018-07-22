@@ -5,4 +5,5 @@
   position: absolute;
   cursor: move;
   z-index: 2;
+  background-image: url("./0.jpg");
 }

@@ -22,11 +22,14 @@
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1"
   },
+  "homepage": "https://mateuszjonak.github.io/puzzle",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "prettier": {
     "singleQuote": true,
@@ -37,6 +40,7 @@
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "enzyme-to-json": "^3.3.4",
+    "gh-pages": "^1.2.0",
     "react-test-renderer": "^16.4.1",
     "redux-devtools-extension": "^2.13.5"
   }
