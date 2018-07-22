@@ -1,6 +1,15 @@
 .board {
-  background-color: azure;
-  width: 450px;
-  height: 450px;
-  margin: auto;
+  background-color: white;
+  z-index: 1;
+	margin: auto;
+	border: 2px solid #2391b4;
+}
+
+.board-row {
+  display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: stretch;
+	align-content: stretch;
 }

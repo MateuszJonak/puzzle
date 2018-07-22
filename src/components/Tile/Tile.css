@@ -1,0 +1,8 @@
+.tile {
+  width: 150px;
+  height: 150px;
+  background-color: red;
+  position: absolute;
+  cursor: move;
+  z-index: 2;
+}

@@ -1,0 +1,12 @@
+.tiles-box-drop-target {
+  height: inherit;
+  width: inherit;
+}
+
+.tiles-box {
+  height: inherit;
+  width: inherit;
+  position: relative;
+  background-color: #bc3e2b;
+  overflow: hidden;
+}
